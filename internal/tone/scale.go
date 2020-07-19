@@ -74,7 +74,7 @@ var ScaleTones = struct {
 }
 
 // 二音間の間隔を計算する
-func (baseTone ScaleTone) CalculateInterval(compareTone ScaleTone) Interval {
+func (baseTone ScaleTone) CalculateInterval(compareTone ScaleTone) *Interval {
 	if compareTone.interval > baseTone.interval {
 		return NewInterval(compareTone.interval - baseTone.interval)
 	}

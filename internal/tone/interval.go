@@ -8,8 +8,8 @@ type Interval struct {
 }
 
 // Intervalインスタンスを生成
-func NewInterval(interval int) Interval {
-	return Interval{value: interval}
+func NewInterval(interval int) *Interval {
+	return &Interval{value: interval}
 }
 
 // インターバルを表示するメソッド
