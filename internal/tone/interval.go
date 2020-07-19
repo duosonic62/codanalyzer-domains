@@ -1,4 +1,6 @@
-package internal
+package tone
+
+import "strconv"
 
 // 二音間の間隔
 type Interval struct {
@@ -19,8 +21,8 @@ func (i Interval) String() string {
 	// 単に割る2をしても良いが、不動小数点で誤差が生まれそうなので
 	// 2で割り切れなかったら0.5の表記を足す
 	if halfTone {
-		return string(wholeTone) + ".5"
+		return strconv.Itoa(wholeTone) + ".5"
 	}
 
-	return string(wholeTone)
+	return strconv.Itoa(wholeTone)
 }
