@@ -5,22 +5,6 @@ import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 )
 
-// コード構成に関するインターフェス
-// コードの分析の窓口
-type CodeStructure interface {
-	// コード名
-	Name() string
-
-	// ルート音からのインターバルを取得する
-	GetIntervals() *[]tone.Interval
-
-	// 指定されたルート音からコードの構成音を取得する
-	GetCode(root *tone.ScaleTone) *Code
-
-	// 指定した音階のコードトーンを探す
-	GetEquivalenceCodes() *[]Code
-}
-
 // トライアドコードの構造体
 type TriadCode struct {
 	Name  *CodeName
@@ -62,7 +46,15 @@ type Code struct {
 }
 
 // NewCode はインターバルとルート音からコードの構成を生成する
-func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleTone) *Code {
+func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleTone) (*Code, error) {
+	if root == nil || intervals == nil {
+		return nil, errors.New("root and tones must not be null")
+	}
+
+	if len(*intervals) < 3 {
+		return nil, errors.New("need at least 3 chord tones")
+	}
+
 	// 構成音をインターバル分用意する
 	tones := make([]tone.ScaleTone, len(*intervals))
 
@@ -70,10 +62,10 @@ func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleT
 	for i, interval := range *intervals {
 		tones[i] = *root.CalculateTone(&interval)
 	}
-	
+
 	return &Code{
 		Name:  NewCodeName(root, structureName),
 		Root:  root,
 		Tones: &tones,
-	}
+	}, nil
 }
