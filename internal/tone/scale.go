@@ -83,8 +83,8 @@ func (sc ScaleTone) CalculateInterval(compareTone ScaleTone) *Interval {
 	return NewInterval(compareTone.interval + (scaleToneCount - sc.interval))
 }
 
-//CalculateTone は基音からインターバル分離れた音を取得する
-func (sc ScaleTone) CalculateTone(interval *Interval) *ScaleTone {
+//GetToneWithApartInterval は基音からインターバル分離れた音を取得する
+func (sc ScaleTone) GetToneWithApartInterval(interval *Interval) *ScaleTone {
 	toneInterval := sc.interval + interval.value
 	if toneInterval >= scaleToneCount {
 		toneInterval = toneInterval - scaleToneCount

@@ -60,7 +60,7 @@ func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleT
 
 	// 高静音を取得する
 	for i, interval := range *intervals {
-		tones[i] = *root.CalculateTone(&interval)
+		tones[i] = *root.GetToneWithApartInterval(&interval)
 	}
 
 	return &Code{
