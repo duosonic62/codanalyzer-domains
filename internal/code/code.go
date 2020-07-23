@@ -51,7 +51,8 @@ func (c Code) ExtractTriadPatterns() *[][]tone.ScaleTone {
 	return &triadPatterns
 }
 
-func combination(codeTones []tone.ScaleTone, r int) ( result [][]tone.ScaleTone) {
+//combination トーンの組み合わせを取得
+func combination(codeTones []tone.ScaleTone, r int) (result [][]tone.ScaleTone) {
 	// 組み合わるの結果の個数が1の場合はそれぞれの要素を結果の配列に詰めて終わり
 	if r == 1 {
 		for _, codeTone := range codeTones {
@@ -73,7 +74,7 @@ func combination(codeTones []tone.ScaleTone, r int) ( result [][]tone.ScaleTone)
 		defer close(reducedAnswersCh)
 		reducedAnswersCh <- combination(codeTones[1:], r-1)
 	}()
-	for _, reducedAnswer := range <-reducedAnswersCh{
+	for _, reducedAnswer := range <-reducedAnswersCh {
 		// 一つ目の要素を固定した結果をresultにつめる
 		result = append(result, append([]tone.ScaleTone{codeTones[0]}, reducedAnswer...))
 	}

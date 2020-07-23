@@ -2,6 +2,7 @@ package code
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
+	"strconv"
 	"testing"
 )
 
@@ -18,7 +19,7 @@ func TestNewCode_Positive(t *testing.T) {
 		Tones: tonesOnCMajorCode(),
 	}
 	if *actual.Name != *expected.Name {
-		t.Error("Expected: " + expected.Name.Value + ", but actual: " + actual.Name.Value, *actual.Tones, *actual.Root)
+		t.Error("Expected: "+expected.Name.Value+", but actual: "+actual.Name.Value, *actual.Tones, *actual.Root)
 	}
 
 	if *actual.Root != *expected.Root {
@@ -36,7 +37,7 @@ func TestNewCode_Positive(t *testing.T) {
 // コードの生成(異常系 構成音が3音ない場合)
 func TestNewCode_Negative(t *testing.T) {
 	// 構成音が3音ない場合
-	tones :=  &[]tone.Interval {
+	tones := &[]tone.Interval{
 		*tone.NewInterval(0),
 		*tone.NewInterval(4),
 	}
@@ -59,7 +60,7 @@ func TestNewTriadCode_Positive(t *testing.T) {
 		Tones: tonesOnCMajorCode(),
 	}
 	if *actual.Name != *expected.Name {
-		t.Error("Expected: " + expected.Name.Value + ", but actual: " + actual.Name.Value, *actual.Tones, *actual.Root)
+		t.Error("Expected: "+expected.Name.Value+", but actual: "+actual.Name.Value, *actual.Tones, *actual.Root)
 	}
 
 	if *actual.Root != *expected.Root {
@@ -77,7 +78,7 @@ func TestNewTriadCode_Positive(t *testing.T) {
 // トライアドコードの生成(異常系 構成音が3音ない場合)
 func TestNewTriadCode_Negative_UnderThreeTones(t *testing.T) {
 	// 構成音が3音ない場合
-	tones :=  &[]tone.Interval {
+	tones := &[]tone.Interval{
 		*tone.NewInterval(0),
 		*tone.NewInterval(4),
 	}
@@ -90,7 +91,7 @@ func TestNewTriadCode_Negative_UnderThreeTones(t *testing.T) {
 // トライアドコードの生成(異常系 構成音が4音以上の場合)
 func TestNewTriadCode_Negative_OverThreeTones(t *testing.T) {
 	// 構成音が3音ない場合
-	tones :=  &[]tone.Interval {
+	tones := &[]tone.Interval{
 		*tone.NewInterval(0),
 		*tone.NewInterval(4),
 		*tone.NewInterval(7),
@@ -116,7 +117,7 @@ func TestTriadCode_Code_Positive(t *testing.T) {
 		Tones: tonesOnCMajorCode(),
 	}
 	if *actual.Name != *expected.Name {
-		t.Error("Expected: " + expected.Name.Value + ", but actual: " + actual.Name.Value, *actual.Tones, *actual.Root)
+		t.Error("Expected: "+expected.Name.Value+", but actual: "+actual.Name.Value, *actual.Tones, *actual.Root)
 	}
 
 	if *actual.Root != *expected.Root {
@@ -131,12 +132,44 @@ func TestTriadCode_Code_Positive(t *testing.T) {
 	}
 }
 
+func TestCode_ExtractTriadPatterns(t *testing.T) {
+	// CM7
+	majorSeventh, _ := NewCode("Major Seventh", majorSeventhIntervals(), &tone.ScaleTones.C)
+	actual := majorSeventh.ExtractTriadPatterns()
+	if len(*actual) != 4 {
+		t.Error("Expected: 4, but actual: " + strconv.Itoa(len(*actual)))
+	}
+
+	expected := [][]tone.ScaleTone {
+		{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.G},
+		{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.B},
+		{tone.ScaleTones.C, tone.ScaleTones.G, tone.ScaleTones.B},
+		{tone.ScaleTones.E, tone.ScaleTones.G, tone.ScaleTones.B},
+	}
+
+	for i, tones := range *actual{
+		for j, tone := range tones{
+			if tone != expected[i][j] {
+				t.Error("Expected: " + expected[i][j].String() + ", but actual: " + tone.String())
+			}
+		}
+	}
+}
+
 // テストヘルパーメソッド
 func majorTriadIntervals() *[]tone.Interval {
-	return &[]tone.Interval {
+	return &[]tone.Interval{
 		*tone.NewInterval(0),
 		*tone.NewInterval(4),
 		*tone.NewInterval(7),
+	}
+}
+func majorSeventhIntervals() *[]tone.Interval {
+	return &[]tone.Interval{
+		*tone.NewInterval(0),
+		*tone.NewInterval(4),
+		*tone.NewInterval(7),
+		*tone.NewInterval(11),
 	}
 }
 
