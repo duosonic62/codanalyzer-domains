@@ -13,19 +13,27 @@ type TriadCode struct {
 }
 
 // トライアドコードを作成
-func NewTriadCode(structureName string, root *tone.ScaleTone, tones *[]tone.ScaleTone) (*TriadCode, error) {
-	if root == nil || tones == nil {
+func NewTriadCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleTone) (*TriadCode, error) {
+	if root == nil || intervals == nil {
 		return nil, errors.New("root and tones must not be null")
 	}
 
-	if len(*tones) != 3 {
+	if len(*intervals) != 3 {
 		return nil, errors.New("triad code constituting tone must be 3 tones")
+	}
+
+	// 構成音をインターバル分用意する
+	tones := make([]tone.ScaleTone, len(*intervals))
+
+	// 構成音を取得する
+	for i, interval := range *intervals {
+		tones[i] = *root.GetToneWithApartInterval(&interval)
 	}
 
 	return &TriadCode{
 		Name:  NewCodeName(root, structureName),
 		Root:  root,
-		Tones: tones,
+		Tones: &tones,
 	}, nil
 }
 
@@ -58,7 +66,7 @@ func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleT
 	// 構成音をインターバル分用意する
 	tones := make([]tone.ScaleTone, len(*intervals))
 
-	// 高静音を取得する
+	// 構成音を取得する
 	for i, interval := range *intervals {
 		tones[i] = *root.GetToneWithApartInterval(&interval)
 	}
