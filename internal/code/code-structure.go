@@ -22,4 +22,3 @@ type (
 		GetTriadWithContainedSameTonesInCode(code *Code) *[]TriadCode
 	}
 )
-
