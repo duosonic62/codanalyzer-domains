@@ -1,5 +1,7 @@
 package tone
 
+import "errors"
+
 type ScaleTone struct {
 	value    string
 	interval int
@@ -73,10 +75,58 @@ var ScaleTones = struct {
 	},
 }
 
-// 二音間の間隔を計算する
-func (baseTone ScaleTone) CalculateInterval(compareTone ScaleTone) *Interval {
-	if compareTone.interval > baseTone.interval {
-		return NewInterval(compareTone.interval - baseTone.interval)
+//CalculateInterval は二音間のインターバルを計算する
+func (sc ScaleTone) CalculateInterval(compareTone ScaleTone) *Interval {
+	if compareTone.interval > sc.interval {
+		return NewInterval(compareTone.interval - sc.interval)
 	}
-	return NewInterval(compareTone.interval + (scaleToneCount - baseTone.interval))
+	return NewInterval(compareTone.interval + (scaleToneCount - sc.interval))
+}
+
+//CalculateTone は基音からインターバル分離れた音を取得する
+func (sc ScaleTone) CalculateTone(interval *Interval) *ScaleTone {
+	toneInterval := sc.interval + interval.value
+	if toneInterval >= scaleToneCount {
+		toneInterval = toneInterval - scaleToneCount
+	}
+
+	// エラーは本来起こり得ないので発生したらpanicを起こさせる
+	scaleTone, err := ScaleToneFromInterval(toneInterval)
+	if err != nil {
+		panic(err)
+	}
+
+	return scaleTone
+}
+
+//ScaleToneFromInterval はCからのインターバルからスケール音を取得する
+func ScaleToneFromInterval(interval int) (*ScaleTone, error) {
+	switch interval {
+	case 0:
+		return &ScaleTones.C, nil
+	case 1:
+		return &ScaleTones.CS, nil
+	case 2:
+		return &ScaleTones.D, nil
+	case 3:
+		return &ScaleTones.DS, nil
+	case 4:
+		return &ScaleTones.E, nil
+	case 5:
+		return &ScaleTones.F, nil
+	case 6:
+		return &ScaleTones.FS, nil
+	case 7:
+		return &ScaleTones.G, nil
+	case 8:
+		return &ScaleTones.GS, nil
+	case 9:
+		return &ScaleTones.A, nil
+	case 10:
+		return &ScaleTones.AS, nil
+	case 11:
+		return &ScaleTones.B, nil
+	default:
+		return nil, errors.New("scale tone interval must be 0 - 11")
+	}
 }

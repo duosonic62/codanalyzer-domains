@@ -7,12 +7,12 @@ type Interval struct {
 	value int
 }
 
-// Intervalインスタンスを生成
+// NewInterval はIntervalインスタンスを生成
 func NewInterval(interval int) *Interval {
 	return &Interval{value: interval}
 }
 
-// インターバルを表示するメソッド
+// String はインターバルを表示するメソッド
 // ユーザが理解しやすいように全音を１に直す
 func (i Interval) String() string {
 	wholeTone := i.value / 2

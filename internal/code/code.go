@@ -15,7 +15,7 @@ type CodeStructure interface {
 	GetIntervals() *[]tone.Interval
 
 	// 指定されたルート音からコードの構成音を取得する
-	GetCode(root tone.ScaleTone) *Code
+	GetCode(root *tone.ScaleTone) *Code
 
 	// 指定した音階のコードトーンを探す
 	GetEquivalenceCodes() *[]Code
@@ -59,4 +59,21 @@ type Code struct {
 	Name  string
 	Root  *tone.ScaleTone
 	Tones *[]tone.ScaleTone
+}
+
+// NewCode はインターバルとルート音からコードの構成を生成する
+func NewCode(name string, intervals *[]tone.Interval, root *tone.ScaleTone) *Code {
+	// 構成音をインターバル分用意する
+	tones := make([]tone.ScaleTone, len(*intervals))
+
+	// 高静音を取得する
+	for i, interval := range *intervals {
+		tones[i] = *root.CalculateTone(&interval)
+	}
+	
+	return &Code{
+		Name:  name,
+		Root:  root,
+		Tones: &tones,
+	}
 }
