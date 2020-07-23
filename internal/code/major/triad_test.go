@@ -59,8 +59,3 @@ func majorTriadIntervals() *[]tone.Interval {
 		*tone.NewInterval(7),
 	}
 }
-
-// テストヘルパーメソッド
-func tonesOnCMajorCode() *[]tone.ScaleTone {
-	return &[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.G}
-}
