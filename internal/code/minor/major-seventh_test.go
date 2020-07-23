@@ -1,4 +1,4 @@
-package major
+package minor
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
@@ -6,18 +6,18 @@ import (
 	"testing"
 )
 
-var majorSeventh = NewMajorMajorSeventh()
+var minorMajorSeventh = NewMinorMajorSeventh()
 
 func TestMajorSeventh_Name_Positive(t *testing.T) {
-	if majorSeventh.Name() != "Major Seventh" {
-		t.Error("Expected: Major Seventh, but actual: " + majorSeventh.Name())
+	if minorMajorSeventh.Name() != "Major Seventh" {
+		t.Error("Expected: Major Seventh, but actual: " + minorMajorSeventh.Name())
 	}
 }
 
 func TestMajorSeventh_GetIntervals_Positive(t *testing.T) {
-	expected := *majorSeventhIntervals()
+	expected := *minorMajorSeventhIntervals()
 
-	for i, actual := range *majorSeventh.intervals {
+	for i, actual := range *minorMajorSeventh.intervals {
 		if actual != expected[i] {
 			t.Error("Expected: ", expected[i], ", but actual: ", actual)
 		}
@@ -25,8 +25,8 @@ func TestMajorSeventh_GetIntervals_Positive(t *testing.T) {
 }
 
 func TestMajorSeventh_GetCode_Positive(t *testing.T) {
-	actual := majorSeventh.GetCode(&tone.ScaleTones.C)
-	expected, err := code.NewCode("Major Seventh", majorSeventhIntervals(), &tone.ScaleTones.C)
+	actual := minorMajorSeventh.GetCode(&tone.ScaleTones.C)
+	expected, err := code.NewCode("Major Seventh", minorMajorSeventhIntervals(), &tone.ScaleTones.C)
 	if err != nil {
 		t.Error(err)
 	}
@@ -48,10 +48,10 @@ func TestMajorSeventh_GetCode_Positive(t *testing.T) {
 }
 
 // テストヘルパーメソッド
-func majorSeventhIntervals() *[]tone.Interval {
+func minorMajorSeventhIntervals() *[]tone.Interval {
 	return &[]tone.Interval{
 		*tone.NewInterval(0),
-		*tone.NewInterval(4),
+		*tone.NewInterval(3),
 		*tone.NewInterval(7),
 		*tone.NewInterval(11),
 	}
