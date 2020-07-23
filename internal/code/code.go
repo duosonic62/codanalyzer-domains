@@ -23,13 +23,13 @@ type CodeStructure interface {
 
 // トライアドコードの構造体
 type TriadCode struct {
-	Name  string
+	Name  *CodeName
 	Root  *tone.ScaleTone
 	Tones *[]tone.ScaleTone
 }
 
 // トライアドコードを作成
-func NewTriadCode(name string, root *tone.ScaleTone, tones *[]tone.ScaleTone) (*TriadCode, error) {
+func NewTriadCode(structureName string, root *tone.ScaleTone, tones *[]tone.ScaleTone) (*TriadCode, error) {
 	if root == nil || tones == nil {
 		return nil, errors.New("root and tones must not be null")
 	}
@@ -39,7 +39,7 @@ func NewTriadCode(name string, root *tone.ScaleTone, tones *[]tone.ScaleTone) (*
 	}
 
 	return &TriadCode{
-		Name:  name,
+		Name:  NewCodeName(root, structureName),
 		Root:  root,
 		Tones: tones,
 	}, nil
@@ -56,13 +56,13 @@ func (t TriadCode) Code() *Code {
 
 // コードの構造体
 type Code struct {
-	Name  string
+	Name  *CodeName
 	Root  *tone.ScaleTone
 	Tones *[]tone.ScaleTone
 }
 
 // NewCode はインターバルとルート音からコードの構成を生成する
-func NewCode(name string, intervals *[]tone.Interval, root *tone.ScaleTone) *Code {
+func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleTone) *Code {
 	// 構成音をインターバル分用意する
 	tones := make([]tone.ScaleTone, len(*intervals))
 
@@ -72,7 +72,7 @@ func NewCode(name string, intervals *[]tone.Interval, root *tone.ScaleTone) *Cod
 	}
 	
 	return &Code{
-		Name:  name,
+		Name:  NewCodeName(root, structureName),
 		Root:  root,
 		Tones: &tones,
 	}
