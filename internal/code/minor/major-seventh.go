@@ -1,4 +1,4 @@
-package major
+package minor
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
@@ -11,16 +11,16 @@ type MajorSeventh struct {
 }
 
 //NewMajorSeventh MajorSeventhのコンストラクタ
-func NewMajorMajorSeventh() MajorSeventh {
-	// 1度、3度、5度、M7度のインターバル
+func NewMinorMajorSeventh() MajorSeventh {
+	// 1度、m3度、5度、M7度のインターバル
 	intervals := &[]tone.Interval{
 		*tone.NewInterval(0),
-		*tone.NewInterval(4),
+		*tone.NewInterval(3),
 		*tone.NewInterval(7),
 		*tone.NewInterval(11),
 	}
 	return MajorSeventh{
-		name:      "Major Seventh",
+		name:      "Minor Major Seventh",
 		intervals: intervals,
 	}
 }
