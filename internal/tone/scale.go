@@ -91,7 +91,7 @@ func (sc ScaleTone) CalculateTone(interval *Interval) *ScaleTone {
 	}
 
 	// エラーは本来起こり得ないので発生したらpanicを起こさせる
-	scaleTone, err := ScaleToneFromInterval(toneInterval)
+	scaleTone, err := scaleToneFromInterval(toneInterval)
 	if err != nil {
 		panic(err)
 	}
@@ -99,8 +99,12 @@ func (sc ScaleTone) CalculateTone(interval *Interval) *ScaleTone {
 	return scaleTone
 }
 
+func (sc ScaleTone) String() string {
+	return sc.value
+}
+
 //ScaleToneFromInterval はCからのインターバルからスケール音を取得する
-func ScaleToneFromInterval(interval int) (*ScaleTone, error) {
+func scaleToneFromInterval(interval int) (*ScaleTone, error) {
 	switch interval {
 	case 0:
 		return &ScaleTones.C, nil
