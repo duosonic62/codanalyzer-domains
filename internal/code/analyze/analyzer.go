@@ -1,7 +1,6 @@
 package analyze
 
 import (
-	"fmt"
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
 	"reflect"
 )
@@ -41,10 +40,6 @@ func (a Analyzer) GetTriadWithContainedSameTonesInCode(target *code.Code) (*[]co
 //getEquivalentCodeOrNil はTriadPatternに等価なコードがあれば取得するメソッドです
 func getEquivalentCodeOrNil(pattern *code.TriadPattern, structure *code.TriadCodeStructure) *code.TriadCode {
 	s := *structure
-
-	fmt.Println("pattern: ", *pattern.Intervals)
-	fmt.Println("struct", *s.GetIntervals())
-
 	//インターバルが等価であればコードを取得する
 	if reflect.DeepEqual(*pattern.Intervals, *s.GetIntervals()) {
 		return s.GetTriadCode(pattern.Root)

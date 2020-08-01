@@ -23,6 +23,15 @@ func TestCalculateInterval_Positive_UpperOctave(t *testing.T) {
 	}
 }
 
+// 比較する音が元の音と同じ
+// C -> C
+func TestScaleTone_CalculateInterval_SameTone(t *testing.T) {
+	actual := ScaleTones.C.CalculateInterval(ScaleTones.C)
+	if actual.value != 0 {
+		t.Error("Expected: 0, but actual: " + strconv.Itoa(actual.value))
+	}
+}
+
 // 取得する音が元の音と同じオクターブ
 func TestScaleTone_GetToneWithApartInterval_Positive_SameOctave(t *testing.T) {
 	// Cから二音離れた音(D)を取得する
