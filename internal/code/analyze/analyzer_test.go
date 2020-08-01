@@ -1,7 +1,6 @@
 package analyze
 
 import (
-	"fmt"
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
 	"github.com/duosonic62/codanalyzer-domains/internal/code/major"
 	"github.com/duosonic62/codanalyzer-domains/internal/code/minor"
@@ -11,20 +10,32 @@ import (
 
 func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 	//メジャートライアドのアナライザを作成
-	analyuzer := Analyzer{triadCodeStructures: &[]code.TriadCodeStructure{
+	analyzer := Analyzer{triadCodeStructures: &[]code.TriadCodeStructure{
 		major.NewMajorTriad(),
 		minor.NewMinorTriad(),
 	}}
 
 	//CM7を解析する
-	actual, err := analyuzer.GetTriadWithContainedSameTonesInCode(cM7())
+	actual, err := analyzer.GetTriadWithContainedSameTonesInCode(cM7())
 	if err != nil {
 		t.Error("Expected: error is nil, but ", err)
 	}
 
-	for _, v := range *actual {
-		t.Log(v)
-		fmt.Println(v)
+	expected := []code.TriadCode{
+		*major.NewMajorTriad().GetTriadCode(&tone.ScaleTones.C),
+		*minor.NewMinorTriad().GetTriadCode(&tone.ScaleTones.E),
+	}
+
+	for i, v := range *actual {
+		if v.Root == expected[i].Root {
+			t.Error("Expected:", expected[i].Root,  ", but ", v.Root)
+		}
+		if v.Tones == expected[i].Tones {
+			t.Error("Expected:", expected[i].Tones,  ", but ", v.Tones)
+		}
+		if v.Name == expected[i].Name {
+			t.Error("Expected:", expected[i].Name,  ", but ", v.Name)
+		}
 	}
 }
 

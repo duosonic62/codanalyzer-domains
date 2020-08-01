@@ -1,6 +1,7 @@
 package code
 
 import (
+	"fmt"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 	"reflect"
 	"strconv"
@@ -245,6 +246,10 @@ func TestCode_ExtractTriadPatterns(t *testing.T) {
 				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.G),
 			},
 		},
+	}
+
+	for _, v := range *actual  {
+		fmt.Println(*v.Intervals)
 	}
 
 	if reflect.DeepEqual(actual, expected) {
