@@ -37,12 +37,23 @@ func (mt MajorTriad) GetIntervals() *[]tone.Interval {
 
 // GetCode は指定されたルート音でのコード構成を返す
 func (mt MajorTriad) GetCode(root *tone.ScaleTone) *code.Code {
-	code, err := code.NewCode(mt.name, mt.intervals, root)
+	newCode, err := code.NewCode(mt.name, mt.intervals, root)
 
 	// 本来エラーは起こり得ないので、エラーになったらpanicを起こす
 	if err != nil {
 		panic(err)
 	}
 
-	return code
+	return newCode
+}
+
+func (mt MajorTriad) GetTriadCode(root *tone.ScaleTone) *code.TriadCode {
+	triadCode, err := code.NewTriadCode(mt.name, mt.intervals, root)
+
+	// 本来エラーは起こり得ないので、エラーになったらpanicを起こす
+	if err != nil {
+		panic(err)
+	}
+
+	return triadCode
 }

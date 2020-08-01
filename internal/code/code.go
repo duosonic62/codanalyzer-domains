@@ -45,10 +45,22 @@ func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleT
 }
 
 //ExtractTriadPatterns コードから3音構成を抽出する
-func (c Code) ExtractTriadPatterns() *[][]tone.ScaleTone {
+func (c Code) ExtractTriadPatterns() (*[]TriadPattern, error) {
+	//三音の組み合わせを取得する
 	codeTones := *c.Tones
-	triadPatterns := combination(codeTones, 3)
-	return &triadPatterns
+	triadCombinations := combination(codeTones, 3)
+
+	//三音の組みあわあせからトライアドの構成音を分析する
+	triadPatterns := make([]TriadPattern, 0)
+	for _, triad := range triadCombinations {
+		triadPattern, err := NewTriadPattern(&triad)
+		if err != nil {
+			return nil, err
+		}
+		triadPatterns = append(triadPatterns, *triadPattern...)
+	}
+
+	return &triadPatterns, nil
 }
 
 //combination トーンの組み合わせを取得

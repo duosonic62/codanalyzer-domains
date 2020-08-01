@@ -46,3 +46,15 @@ func (mt MinorTriad) GetCode(root *tone.ScaleTone) *code.Code {
 
 	return code
 }
+
+//GetTriadCode は指定されたルート音でのコード構成を返す
+func (mt MinorTriad) GetTriadCode(root *tone.ScaleTone) *code.TriadCode {
+	triadCode, err := code.NewTriadCode(mt.name, mt.intervals, root)
+
+	// 本来エラーは起こり得ないので、エラーになったらpanicを起こす
+	if err != nil {
+		panic(err)
+	}
+
+	return triadCode
+}
