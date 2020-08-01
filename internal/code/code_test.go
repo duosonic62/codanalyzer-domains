@@ -2,6 +2,7 @@ package code
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
+	"reflect"
 	"strconv"
 	"testing"
 )
@@ -135,24 +136,119 @@ func TestTriadCode_Code_Positive(t *testing.T) {
 func TestCode_ExtractTriadPatterns(t *testing.T) {
 	// CM7
 	majorSeventh, _ := NewCode("Major Seventh", majorSeventhIntervals(), &tone.ScaleTones.C)
-	actual := majorSeventh.ExtractTriadPatterns()
-	if len(*actual) != 4 {
+	actual, err := majorSeventh.ExtractTriadPatterns()
+	if err != nil {
+		t.Error("Expected: error is nil, but actual ", err)
+	}
+	if len(*actual) != 12 {
 		t.Error("Expected: 4, but actual: " + strconv.Itoa(len(*actual)))
 	}
 
-	expected := [][]tone.ScaleTone {
-		{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.G},
-		{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.B},
-		{tone.ScaleTones.C, tone.ScaleTones.G, tone.ScaleTones.B},
-		{tone.ScaleTones.E, tone.ScaleTones.G, tone.ScaleTones.B},
+	expected := []TriadPattern{
+		// C, E, G
+		{
+			Root: &tone.ScaleTones.C,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.E),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.E,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.C),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.G,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.E),
+			},
+		},
+		// C, E, B
+		{
+			Root: &tone.ScaleTones.C,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.E,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.C),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.B,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.E),
+			},
+		},
+		// C, G, B
+		{
+			Root: &tone.ScaleTones.C,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.B),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.G,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.C),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.B,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.C),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.G),
+			},
+		},
+		// E, G, B
+		{
+			Root: &tone.ScaleTones.E,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.B),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.G,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.E),
+			},
+		},
+		{
+			Root: &tone.ScaleTones.B,
+			Intervals: &[]tone.Interval{
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.E),
+				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.G),
+			},
+		},
 	}
 
-	for i, tones := range *actual{
-		for j, tone := range tones{
-			if tone != expected[i][j] {
-				t.Error("Expected: " + expected[i][j].String() + ", but actual: " + tone.String())
-			}
-		}
+	if reflect.DeepEqual(actual, expected) {
+		t.Error("Expected: ", expected, ", but ", actual)
 	}
 }
 

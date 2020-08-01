@@ -18,7 +18,13 @@ type (
 
 	//TriadCodeStructure はトライアドコードの構成を表すインターフェース
 	TriadCodeStructure interface {
-		//GetTriadWithContainedSameTonesInCode は指定されたコード内に含まれる音と同じ構成のトライアドを取得する
-		GetTriadWithContainedSameTonesInCode(code *Code) *[]TriadCode
+		// コード名
+		Name() string
+
+		// ルート音からのインターバルを取得する
+		GetIntervals() *[]tone.Interval
+
+		// 指定されたルート音からコードの構成音を取得する
+		GetTriadCode(root *tone.ScaleTone) *TriadCode
 	}
 )
