@@ -38,7 +38,7 @@ func (a Analyzer) GetTriadWithContainedSameTonesInCode(target *code.Code) (*[]co
 }
 
 //getEquivalentCodeOrNil はTriadPatternに等価なコードがあれば取得するメソッドです
-func getEquivalentCodeOrNil(pattern *code.TriadPattern, structure *code.TriadCodeStructure) *code.TriadCode {
+func getEquivalentCodeOrNil(pattern *TriadInversion, structure *code.TriadCodeStructure) *code.TriadCode {
 	s := *structure
 	//インターバルが等価であればコードを取得する
 	if reflect.DeepEqual(*pattern.Intervals, *s.GetIntervals()) {

@@ -1,4 +1,4 @@
-package code
+package analyze
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
@@ -7,12 +7,12 @@ import (
 )
 
 func TestNewTriadPattern_Positive(t *testing.T) {
-	actual, err := NewTriadPattern(cTriad())
+	actual, err := NewTriadInversions(cTriad())
 	if err != nil {
 		t.Error("Expected: error is nil, but ", err)
 	}
 
-	expected := []TriadPattern{
+	expected := []TriadInversion{
 		{
 			Root: &tone.ScaleTones.C,
 			Intervals: &[]tone.Interval{
@@ -49,13 +49,13 @@ func TestNewTriadPattern_Positive(t *testing.T) {
 
 func TestNewTriadPattern_Negative(t *testing.T) {
 	// 2音以下でエラー
-	_, err := NewTriadPattern(&[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E})
+	_, err := NewTriadInversions(&[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E})
 	if err == nil {
 		t.Error("Expected: error is not nil")
 	}
 
 	// 4音以上でエラー
-	_, err = NewTriadPattern(&[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.F, tone.ScaleTones.G})
+	_, err = NewTriadInversions(&[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.F, tone.ScaleTones.G})
 	if err == nil {
 		t.Error("Expected: error is not nil")
 	}

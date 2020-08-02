@@ -2,6 +2,7 @@ package code
 
 import (
 	"errors"
+	"github.com/duosonic62/codanalyzer-domains/internal/analyze"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 )
 
@@ -38,15 +39,15 @@ func NewCode(structureName string, intervals *[]tone.Interval, root *tone.ScaleT
 }
 
 //ExtractTriadPatterns コードから3音構成を抽出する
-func (c Code) ExtractTriadPatterns() (*[]TriadPattern, error) {
+func (c Code) ExtractTriadPatterns() (*[]analyze.TriadInversion, error) {
 	//三音の組み合わせを取得する
 	codeTones := *c.Tones
 	triadCombinations := combination(codeTones, 3)
 
 	//三音の組みあわあせからトライアドの構成音を分析する
-	triadPatterns := make([]TriadPattern, 0)
+	triadPatterns := make([]analyze.TriadInversion, 0)
 	for _, triad := range triadCombinations {
-		triadPattern, err := NewTriadPattern(&triad)
+		triadPattern, err := analyze.NewTriadInversions(&triad)
 		if err != nil {
 			return nil, err
 		}
