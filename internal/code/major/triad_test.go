@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var triad = NewMajorTriad()
+var triad = NewTriad()
 
 func TestMajorTriad_Name_Positive(t *testing.T) {
 	if triad.Name() != "Major Triad" {

@@ -6,11 +6,11 @@ import (
 	"testing"
 )
 
-var majorSeventh = NewMajorMajorSeventh()
+var majorSeventh = NewMajorSeventh()
 
 func TestMajorSeventh_Name_Positive(t *testing.T) {
-	if majorSeventh.Name() != "Major Seventh" {
-		t.Error("Expected: Major Seventh, but actual: " + majorSeventh.Name())
+	if majorSeventh.Name() != "Major MajorSeventh" {
+		t.Error("Expected: Major MajorSeventh, but actual: " + majorSeventh.Name())
 	}
 }
 
@@ -26,7 +26,7 @@ func TestMajorSeventh_GetIntervals_Positive(t *testing.T) {
 
 func TestMajorSeventh_GetCode_Positive(t *testing.T) {
 	actual := majorSeventh.GetCode(&tone.ScaleTones.C)
-	expected, err := code.NewCode("Major Seventh", majorSeventhIntervals(), &tone.ScaleTones.C)
+	expected, err := code.NewCode("Major MajorSeventh", majorSeventhIntervals(), &tone.ScaleTones.C)
 	if err != nil {
 		t.Error(err)
 	}

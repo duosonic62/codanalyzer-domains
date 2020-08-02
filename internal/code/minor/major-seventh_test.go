@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var minorMajorSeventh = NewMinorMajorSeventh()
+var minorMajorSeventh = NewMajorSeventh()
 
 func TestMajorSeventh_Name_Positive(t *testing.T) {
 	if minorMajorSeventh.Name() != "Minor Major Seventh" {

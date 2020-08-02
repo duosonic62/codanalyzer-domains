@@ -5,38 +5,38 @@ import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 )
 
-// MinorTriad はマイナートライアドコードを表す
-type MinorTriad struct {
+// Triad はマイナートライアドコードを表す
+type Triad struct {
 	name      string
 	intervals *[]tone.Interval
 }
 
-//NewMinorTriad MinorTriadのコンストラクタ
-func NewMinorTriad() MinorTriad {
+//NewTriad MinorTriadのコンストラクタ
+func NewTriad() Triad {
 	// 1度、3度、5度のインターバル
 	intervals := &[]tone.Interval{
 		*tone.NewInterval(0),
 		*tone.NewInterval(3),
 		*tone.NewInterval(7),
 	}
-	return MinorTriad{
+	return Triad{
 		name:      "Minor Triad",
 		intervals: intervals,
 	}
 }
 
 // Name はコード名を表示する
-func (mt MinorTriad) Name() string {
+func (mt Triad) Name() string {
 	return mt.name
 }
 
 // GetIntervalsはコード構成音の間隔を取得する
-func (mt MinorTriad) GetIntervals() *[]tone.Interval {
+func (mt Triad) GetIntervals() *[]tone.Interval {
 	return mt.intervals
 }
 
 // GetCode は指定されたルート音でのコード構成を返す
-func (mt MinorTriad) GetCode(root *tone.ScaleTone) *code.Code {
+func (mt Triad) GetCode(root *tone.ScaleTone) *code.Code {
 	code, err := code.NewCode(mt.name, mt.intervals, root)
 
 	// 本来エラーは起こり得ないので、エラーになったらpanicを起こす
@@ -48,7 +48,7 @@ func (mt MinorTriad) GetCode(root *tone.ScaleTone) *code.Code {
 }
 
 //GetTriadCode は指定されたルート音でのコード構成を返す
-func (mt MinorTriad) GetTriadCode(root *tone.ScaleTone) *code.TriadCode {
+func (mt Triad) GetTriadCode(root *tone.ScaleTone) *code.TriadCode {
 	triadCode, err := code.NewTriadCode(mt.name, mt.intervals, root)
 
 	// 本来エラーは起こり得ないので、エラーになったらpanicを起こす
