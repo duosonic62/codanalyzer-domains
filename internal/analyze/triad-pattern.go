@@ -1,25 +1,25 @@
-package code
+package analyze
 
 import (
 	"errors"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 )
 
-//TriadPattern トライアドの解析パターン
-type TriadPattern struct {
+//TriadInversion トライアドの解析パターン
+type TriadInversion struct {
 	Root      *tone.ScaleTone
 	Intervals *[]tone.Interval
 }
 
-//NewTriadPattern は三音構成のトーンからTriadPatternのインスタンスを生成します
-//三音構成のためルートが３つ生まれるので、三つのTriadPatternが生成されます
-func NewTriadPattern(triads *[]tone.ScaleTone) (*[]TriadPattern, error) {
+//NewTriadInversions は三音構成のトーンから３つの転回形のコードパターン、TriadInversionのインスタンスを生成します
+//三音構成のためルートが３つ生まれるので、三つのTriadInversionが生成されます
+func NewTriadInversions(triads *[]tone.ScaleTone) (*[]TriadInversion, error) {
 	triadTones := *triads
 	if len(triadTones) != 3 {
 		return nil, errors.New("triad tones needs 3 code tones")
 	}
 
-	patterns := make([]TriadPattern, len(triadTones))
+	patterns := make([]TriadInversion, len(triadTones))
 	for i, triadTone := range triadTones {
 		root := triadTone
 		intervals := make([]tone.Interval, len(triadTones))
@@ -30,7 +30,7 @@ func NewTriadPattern(triads *[]tone.ScaleTone) (*[]TriadPattern, error) {
 			intervals[j] = *interval
 		}
 
-		pattern := TriadPattern{
+		pattern := TriadInversion{
 			Root:      &root,
 			Intervals: &intervals,
 		}
