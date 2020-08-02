@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var triad = NewMinorTriad()
+var triad = NewTriad()
 
 func TestMinorTriad_Name_Positive(t *testing.T) {
 	if triad.Name() != "Minor Triad" {

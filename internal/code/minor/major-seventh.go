@@ -11,7 +11,7 @@ type MajorSeventh struct {
 }
 
 //NewMajorSeventh MajorSeventhのコンストラクタ
-func NewMinorMajorSeventh() MajorSeventh {
+func NewMajorSeventh() MajorSeventh {
 	// 1度、m3度、5度、M7度のインターバル
 	intervals := &[]tone.Interval{
 		*tone.NewInterval(0),

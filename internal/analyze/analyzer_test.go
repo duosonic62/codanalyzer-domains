@@ -11,8 +11,8 @@ import (
 func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 	//メジャートライアドのアナライザを作成
 	analyzer := Analyzer{triadCodeStructures: &[]code.TriadCodeStructure{
-		major.NewMajorTriad(),
-		minor.NewMinorTriad(),
+		major.NewTriad(),
+		minor.NewTriad(),
 	}}
 
 	//CM7を解析する
@@ -22,8 +22,8 @@ func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 	}
 
 	expected := []code.TriadCode{
-		*major.NewMajorTriad().GetTriadCode(&tone.ScaleTones.C),
-		*minor.NewMinorTriad().GetTriadCode(&tone.ScaleTones.E),
+		*major.NewTriad().GetTriadCode(&tone.ScaleTones.C),
+		*minor.NewTriad().GetTriadCode(&tone.ScaleTones.E),
 	}
 
 	for i, v := range *actual {
@@ -40,5 +40,5 @@ func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 }
 
 func cM7() *code.Code {
-	return major.NewMajorMajorSeventh().GetCode(&tone.ScaleTones.C)
+	return major.NewMajorSeventh().GetCode(&tone.ScaleTones.C)
 }
