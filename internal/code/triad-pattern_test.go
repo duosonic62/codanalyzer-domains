@@ -1,4 +1,4 @@
-package analyze
+package code
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"

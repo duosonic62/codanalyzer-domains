@@ -2,7 +2,6 @@ package code
 
 import (
 	"fmt"
-	"github.com/duosonic62/codanalyzer-domains/internal/analyze"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 	"reflect"
 	"strconv"
@@ -146,7 +145,7 @@ func TestCode_ExtractTriadPatterns(t *testing.T) {
 		t.Error("Expected: 4, but actual: " + strconv.Itoa(len(*actual)))
 	}
 
-	expected := []analyze.TriadInversion{
+	expected := []TriadInversion{
 		// C, E, G
 		{
 			Root: &tone.ScaleTones.C,
