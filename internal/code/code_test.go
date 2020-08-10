@@ -249,7 +249,7 @@ func TestCode_ExtractTriadPatterns(t *testing.T) {
 		},
 	}
 
-	for _, v := range *actual  {
+	for _, v := range *actual {
 		fmt.Println(*v.Intervals)
 	}
 
