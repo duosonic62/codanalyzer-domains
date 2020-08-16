@@ -1,16 +1,14 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 func main() {
-	a := []int{0, 1, 2}
-	for i := range a {
-		fmt.Println(strconv.Itoa(i))
-		for j := 0; j < len(a); j++ {
-			fmt.Println(strconv.Itoa(j) + ": " + strconv.Itoa((i+j)%3))
-		}
+	codes, err := readFromJson("codes.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, code := range *codes {
+		fmt.Println(code)
 	}
 }
