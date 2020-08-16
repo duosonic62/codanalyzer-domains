@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "codes": [
+    {
+      "name": "Triad",
+      "intervals": [
+        "R",
+        "M3",
+        "M5"
+      ]
+    },
+    {
+      "name": "Minor",
+      "intervals": [
+        "R",
+        "m3",
+        "M5"
+      ]
+    },
+    {
+      "name": "M7",
+      "intervals": [
+        "R",
+        "M3",
+        "M5",
+        "M7"
+      ]
+    },
+    {
+      "name": "mM7",
+      "intervals": [
+        "R",
+        "m3",
+        "M5",
+        "M7"
+      ]
+    }
+  ]
+}
