@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
-	"strconv"
 )
 
 func toStructureBase(collection *[]CodeInput) (*[]code.StructureBase, error) {
@@ -29,12 +28,12 @@ func toIntervals(rowIntervals *[]string) (*[]tone.Interval, error) {
 	domains := make([]tone.Interval, len(*rowIntervals))
 
 	for index, rowInterval := range *rowIntervals {
-		intInterval, err := strconv.Atoi(rowInterval)
+		interval, err := tone.NewIntervalFromName(rowInterval)
 		if err != nil {
 			return nil, err
 		}
 
-		domains[index] = *tone.NewInterval(intInterval)
+		domains[index] = *interval
 	}
 
 	return &domains, nil
