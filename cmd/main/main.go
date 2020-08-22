@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	codes, err := readFromJson("codes.json")
@@ -8,7 +10,12 @@ func main() {
 		fmt.Println(err)
 	}
 
-	for _, code := range *codes {
+	codeStructureBases, err := toStructureBase(codes)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, code := range *codeStructureBases {
 		fmt.Println(code)
 	}
 }
