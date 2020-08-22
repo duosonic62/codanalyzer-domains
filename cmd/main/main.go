@@ -16,6 +16,7 @@ func main() {
 	}
 
 	for _, code := range *codeStructureBases {
-		fmt.Println(code)
+		fmt.Println(code.Name())
+		fmt.Println(code.GetIntervals())
 	}
 }
