@@ -24,6 +24,25 @@ func toStructureBase(collection *[]CodeInput) (*[]code.StructureBase, error) {
 	return &codeStructureBases, nil
 }
 
+func toTriadStructureBase(collection *[]CodeInput) (*[]code.TriadStructureBase, error) {
+	triadStructureBases := make([]code.TriadStructureBase, len(*collection))
+	for index, codeInput := range *collection {
+		intervals, err := toIntervals(&codeInput.Intervals)
+		if err != nil {
+			return nil, err
+		}
+
+		triadStructureBase, err := code.NewTriadStructureBase(codeInput.Name, intervals)
+		if err != nil {
+			return nil, err
+		}
+
+		triadStructureBases[index] = *triadStructureBase
+	}
+
+	return &triadStructureBases, nil
+}
+
 func toIntervals(rowIntervals *[]string) (*[]tone.Interval, error) {
 	domains := make([]tone.Interval, len(*rowIntervals))
 
