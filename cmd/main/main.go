@@ -5,7 +5,12 @@ import (
 )
 
 func main() {
-	codes, err := readFromJson("codes.json")
+	codes, err := readCodesFromJson("codes.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	triads, err := readCodesFromJson("triad.json")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -14,8 +19,16 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	for _, code := range *codeStructureBases {
+		fmt.Println(code.Name())
+		fmt.Println(code.GetIntervals())
+	}
+
+	triadStructureBases, err := toTriadStructureBase(triads)
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, code := range *triadStructureBases {
 		fmt.Println(code.Name())
 		fmt.Println(code.GetIntervals())
 	}
