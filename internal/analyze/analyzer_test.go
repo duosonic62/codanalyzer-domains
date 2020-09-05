@@ -2,8 +2,6 @@ package analyze
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
-	"github.com/duosonic62/codanalyzer-domains/internal/code/major"
-	"github.com/duosonic62/codanalyzer-domains/internal/code/minor"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 	"testing"
 )
@@ -11,8 +9,8 @@ import (
 func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 	//メジャートライアドのアナライザを作成
 	analyzer := Analyzer{triadCodeStructures: &[]code.TriadCodeStructure{
-		major.NewTriad(),
-		minor.NewTriad(),
+		major(),
+		minor(),
 	}}
 
 	//CM7を解析する
@@ -22,23 +20,59 @@ func TestAnalyzer_GetTriadWithContainedSameTonesInCode(t *testing.T) {
 	}
 
 	expected := []code.TriadCode{
-		*major.NewTriad().GetTriadCode(&tone.ScaleTones.C),
-		*minor.NewTriad().GetTriadCode(&tone.ScaleTones.E),
+		*major().GetTriadCode(&tone.ScaleTones.C),
+		*minor().GetTriadCode(&tone.ScaleTones.E),
 	}
 
 	for i, v := range *actual {
 		if v.Root == expected[i].Root {
-			t.Error("Expected:", expected[i].Root,  ", but ", v.Root)
+			t.Error("Expected:", expected[i].Root, ", but ", v.Root)
 		}
 		if v.Tones == expected[i].Tones {
-			t.Error("Expected:", expected[i].Tones,  ", but ", v.Tones)
+			t.Error("Expected:", expected[i].Tones, ", but ", v.Tones)
 		}
 		if v.Name == expected[i].Name {
-			t.Error("Expected:", expected[i].Name,  ", but ", v.Name)
+			t.Error("Expected:", expected[i].Name, ", but ", v.Name)
 		}
 	}
 }
 
+func major() *code.TriadStructureBase {
+	structure, _ := code.NewTriadStructureBase(
+		"major",
+		&[]tone.Interval{
+			*tone.NewInterval(0),
+			*tone.NewInterval(4),
+			*tone.NewInterval(7),
+		},
+	)
+
+	return structure
+}
+
+func minor() *code.TriadStructureBase {
+	structure, _ := code.NewTriadStructureBase(
+		"minor",
+		&[]tone.Interval{
+			*tone.NewInterval(0),
+			*tone.NewInterval(3),
+			*tone.NewInterval(7),
+		},
+	)
+
+	return structure
+}
+
 func cM7() *code.Code {
-	return major.NewMajorSeventh().GetCode(&tone.ScaleTones.C)
+	code, _ := code.NewCode(
+		"CM7",
+		&[]tone.Interval{
+			*tone.NewInterval(0),
+			*tone.NewInterval(4),
+			*tone.NewInterval(7),
+			*tone.NewInterval(11),
+		},
+		&tone.ScaleTones.C,
+	)
+	return code
 }
