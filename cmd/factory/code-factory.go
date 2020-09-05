@@ -1,11 +1,12 @@
-package main
+package factory
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/code"
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
 )
 
-func toStructureBase(collection *[]CodeInput) (*[]code.StructureBase, error) {
+//MakeCodeStructureBase はコード入力用のDTOからコード構造クラスを生成します
+func MakeCodeStructureBase(collection *[]CodeInput) (*[]code.StructureBase, error) {
 	codeStructureBases := make([]code.StructureBase, len(*collection))
 	for index, codeInput := range *collection {
 		intervals, err := toIntervals(&codeInput.Intervals)
@@ -24,7 +25,8 @@ func toStructureBase(collection *[]CodeInput) (*[]code.StructureBase, error) {
 	return &codeStructureBases, nil
 }
 
-func toTriadStructureBase(collection *[]CodeInput) (*[]code.TriadStructureBase, error) {
+//MakeTriadStructureBase  はコード入力用のDTOからトライアド構造クラスを生成します
+func MakeTriadStructureBase(collection *[]CodeInput) (*[]code.TriadStructureBase, error) {
 	triadStructureBases := make([]code.TriadStructureBase, len(*collection))
 	for index, codeInput := range *collection {
 		intervals, err := toIntervals(&codeInput.Intervals)

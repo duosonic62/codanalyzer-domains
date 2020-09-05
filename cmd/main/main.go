@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
+	"github.com/duosonic62/codanalyzer-domains/cmd/factory"
 )
 
 func main() {
-	codes, err := readCodesFromJson("codes.json")
+	codes, err := factory.ReadCodesFromJson("codes.json")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	triads, err := readCodesFromJson("triad.json")
+	triads, err := factory.ReadCodesFromJson("triad.json")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	codeStructureBases, err := toStructureBase(codes)
+	codeStructureBases, err := factory.MakeCodeStructureBase(codes)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -24,7 +25,7 @@ func main() {
 		fmt.Println(code.GetIntervals())
 	}
 
-	triadStructureBases, err := toTriadStructureBase(triads)
+	triadStructureBases, err := factory.MakeTriadStructureBase(triads)
 	if err != nil {
 		fmt.Println(err)
 	}
