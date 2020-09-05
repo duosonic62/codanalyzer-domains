@@ -1,4 +1,4 @@
-package main
+package factory
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ type CodeInput struct {
 	Intervals []string `json:"intervals"`
 }
 
-func readCodesFromJson(filePath string) (*[]CodeInput, error) {
+func ReadCodesFromJson(filePath string) (*[]CodeInput, error) {
 	raw, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return nil, err
