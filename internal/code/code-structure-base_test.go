@@ -16,8 +16,8 @@ func TestNewCodeStructureBase_Positive(t *testing.T) {
 
 func TestNewCodeStructureBase_Negative(t *testing.T) {
 	intervals := []tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(1),
+		*wrapInterval(0),
+		*wrapInterval(1),
 	}
 
 	//コード構成音が2音以下
@@ -65,4 +65,9 @@ func TestStructureBase_GetCode_Positive(t *testing.T) {
 			t.Error("Expected: " + expectedTones[i].String() + ", but actual: " + actualTone.String())
 		}
 	}
+}
+
+func wrapInterval(interval int) *tone.Interval {
+	i, _ := tone.NewInterval(interval)
+	return i
 }

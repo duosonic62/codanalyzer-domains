@@ -2,7 +2,6 @@ package code
 
 import (
 	"github.com/duosonic62/codanalyzer-domains/internal/tone"
-	"reflect"
 	"testing"
 )
 
@@ -16,33 +15,35 @@ func TestNewTriadPattern_Positive(t *testing.T) {
 		{
 			Root: &tone.ScaleTones.C,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.G),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.E,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.C),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.G,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.E),
 			},
 		},
 	}
 
-
 	for i, v := range *actual {
-		if !reflect.DeepEqual(v, expected[i]) {
-			t.Error("Expected: ", *v.Intervals, ", but ", *expected[i].Intervals)
+		expectedIntervals := *expected[i].Intervals
+		for j, interval := range *v.Intervals {
+			if interval != expectedIntervals[j] {
+				t.Error("Expected: ", interval, ", but ", expectedIntervals[j])
+			}
 		}
 	}
 }
