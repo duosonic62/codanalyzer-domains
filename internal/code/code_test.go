@@ -40,8 +40,8 @@ func TestNewCode_Positive(t *testing.T) {
 func TestNewCode_Negative(t *testing.T) {
 	// 構成音が3音ない場合
 	tones := &[]tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(4),
+		*wrapInterval(0),
+		*wrapInterval(4),
 	}
 	_, err := NewCode("Major", tones, &tone.ScaleTones.C)
 	if err == nil {
@@ -81,8 +81,8 @@ func TestNewTriadCode_Positive(t *testing.T) {
 func TestNewTriadCode_Negative_UnderThreeTones(t *testing.T) {
 	// 構成音が3音ない場合
 	tones := &[]tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(4),
+		*wrapInterval(0),
+		*wrapInterval(4),
 	}
 	_, err := NewTriadCode("Major", tones, &tone.ScaleTones.C)
 	if err == nil {
@@ -94,10 +94,10 @@ func TestNewTriadCode_Negative_UnderThreeTones(t *testing.T) {
 func TestNewTriadCode_Negative_OverThreeTones(t *testing.T) {
 	// 構成音が3音ない場合
 	tones := &[]tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(4),
-		*tone.NewInterval(7),
-		*tone.NewInterval(10),
+		*wrapInterval(0),
+		*wrapInterval(4),
+		*wrapInterval(7),
+		*wrapInterval(10),
 	}
 	_, err := NewTriadCode("7", tones, &tone.ScaleTones.C)
 	if err == nil {
@@ -150,100 +150,100 @@ func TestCode_ExtractTriadPatterns(t *testing.T) {
 		{
 			Root: &tone.ScaleTones.C,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.G),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.E,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.C),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.G,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.E),
 			},
 		},
 		// C, E, B
 		{
 			Root: &tone.ScaleTones.C,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.G),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.E,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.C),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.B,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.E),
 			},
 		},
 		// C, G, B
 		{
 			Root: &tone.ScaleTones.C,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.C.CalculateInterval(tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.C, tone.ScaleTones.B),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.G,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.C),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.B,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.C),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.C),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.G),
 			},
 		},
 		// E, G, B
 		{
 			Root: &tone.ScaleTones.E,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.E.CalculateInterval(tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.E, tone.ScaleTones.B),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.G,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.G),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.G.CalculateInterval(tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.G, tone.ScaleTones.E),
 			},
 		},
 		{
 			Root: &tone.ScaleTones.B,
 			Intervals: &[]tone.Interval{
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.B),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.E),
-				*tone.ScaleTones.B.CalculateInterval(tone.ScaleTones.G),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.B),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.E),
+				*calcInterval(tone.ScaleTones.B, tone.ScaleTones.G),
 			},
 		},
 	}
@@ -260,21 +260,26 @@ func TestCode_ExtractTriadPatterns(t *testing.T) {
 // テストヘルパーメソッド
 func majorTriadIntervals() *[]tone.Interval {
 	return &[]tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(4),
-		*tone.NewInterval(7),
+		*wrapInterval(0),
+		*wrapInterval(4),
+		*wrapInterval(7),
 	}
 }
 func majorSeventhIntervals() *[]tone.Interval {
 	return &[]tone.Interval{
-		*tone.NewInterval(0),
-		*tone.NewInterval(4),
-		*tone.NewInterval(7),
-		*tone.NewInterval(11),
+		*wrapInterval(0),
+		*wrapInterval(4),
+		*wrapInterval(7),
+		*wrapInterval(11),
 	}
 }
 
 // テストヘルパーメソッド
 func tonesOnCMajorCode() *[]tone.ScaleTone {
 	return &[]tone.ScaleTone{tone.ScaleTones.C, tone.ScaleTones.E, tone.ScaleTones.G}
+}
+
+func calcInterval(a, b tone.ScaleTone) *tone.Interval {
+	interval, _ := a.CalculateInterval(b)
+	return interval
 }

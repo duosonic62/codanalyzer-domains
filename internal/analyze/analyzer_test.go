@@ -41,9 +41,9 @@ func major() *code.TriadStructureBase {
 	structure, _ := code.NewTriadStructureBase(
 		"major",
 		&[]tone.Interval{
-			*tone.NewInterval(0),
-			*tone.NewInterval(4),
-			*tone.NewInterval(7),
+			*wrapInterval(0),
+			*wrapInterval(4),
+			*wrapInterval(7),
 		},
 	)
 
@@ -54,9 +54,9 @@ func minor() *code.TriadStructureBase {
 	structure, _ := code.NewTriadStructureBase(
 		"minor",
 		&[]tone.Interval{
-			*tone.NewInterval(0),
-			*tone.NewInterval(3),
-			*tone.NewInterval(7),
+			*wrapInterval(0),
+			*wrapInterval(3),
+			*wrapInterval(7),
 		},
 	)
 
@@ -67,12 +67,17 @@ func cM7() *code.Code {
 	code, _ := code.NewCode(
 		"CM7",
 		&[]tone.Interval{
-			*tone.NewInterval(0),
-			*tone.NewInterval(4),
-			*tone.NewInterval(7),
-			*tone.NewInterval(11),
+			*wrapInterval(0),
+			*wrapInterval(4),
+			*wrapInterval(7),
+			*wrapInterval(11),
 		},
 		&tone.ScaleTones.C,
 	)
 	return code
+}
+
+func wrapInterval(interval int) *tone.Interval {
+	i, _ := tone.NewInterval(interval)
+	return i
 }

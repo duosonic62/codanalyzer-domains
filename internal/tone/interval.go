@@ -8,10 +8,11 @@ import (
 // 二音間の間隔
 type Interval struct {
 	value int
+	name  string
 }
 
-var intervalMap = map[string]int {
-	"R": 0,
+var intervalMap = map[string]int{
+	"R":  0,
 	"m2": 1,
 	"M2": 2,
 	"m3": 3,
@@ -29,15 +30,33 @@ var intervalMap = map[string]int {
 }
 
 // NewInterval はIntervalインスタンスを生成
-func NewInterval(interval int) *Interval {
-	return &Interval{value: interval}
+func NewInterval(interval int) (*Interval, error) {
+	var intervalName string
+	for name, value := range intervalMap {
+		if interval == value {
+			intervalName = name
+			break
+		}
+	}
+
+	if intervalName == "" {
+		return nil, errors.New(intervalName + " is not found")
+	}
+
+	return &Interval{
+		value: interval,
+		name:  intervalName,
+	}, nil
 }
 
 //NewIntervalFromName はインターバルを取得しました
 func NewIntervalFromName(intervalName string) (*Interval, error) {
 	interval, ok := intervalMap[intervalName]
 	if ok {
-		return NewInterval(interval), nil
+		return &Interval{
+			value: interval,
+			name:  intervalName,
+		}, nil
 	}
 
 	return nil, errors.New(intervalName + " is not found")

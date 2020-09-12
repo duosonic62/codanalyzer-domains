@@ -26,7 +26,10 @@ func NewTriadInversions(triads *[]tone.ScaleTone) (*[]TriadInversion, error) {
 
 		//0->1->2, 1->2->0, 2->0->1の順番に並び替えてインターバルをとる
 		for j := 0; j <len(triadTones) ; j++ {
-			interval := root.CalculateInterval(triadTones[(i + j) % len(triadTones)])
+			interval, err := root.CalculateInterval(triadTones[(i + j) % len(triadTones)])
+			if err != nil {
+				return nil, err
+			}
 			intervals[j] = *interval
 		}
 
