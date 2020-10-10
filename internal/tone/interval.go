@@ -2,7 +2,6 @@ package tone
 
 import (
 	"errors"
-	"strconv"
 )
 
 // 二音間の間隔
@@ -62,17 +61,13 @@ func NewIntervalFromName(intervalName string) (*Interval, error) {
 	return nil, errors.New(intervalName + " is not found")
 }
 
-// String はインターバルを表示するメソッド
-// ユーザが理解しやすいように全音を１に直す
+// String はインターバルを表示する
 func (i Interval) String() string {
-	wholeTone := i.value / 2
-	halfTone := i.value%2 == 1
+	return i.name
+}
 
-	// 単に割る2をしても良いが、不動小数点で誤差が生まれそうなので
-	// 2で割り切れなかったら0.5の表記を足す
-	if halfTone {
-		return strconv.Itoa(wholeTone) + ".5"
-	}
-
-	return strconv.Itoa(wholeTone)
+//IsEquivalent はインターバルどうしが等価であるか比較します
+//nameが異なっていてもインターバルは等価であることがあるため比較はvalueで行います
+func (i Interval) IsEquivalent(target *Interval) bool {
+	return i.value == target.value
 }

@@ -41,7 +41,7 @@ func TestNewTriadPattern_Positive(t *testing.T) {
 	for i, v := range *actual {
 		expectedIntervals := *expected[i].Intervals
 		for j, interval := range *v.Intervals {
-			if interval != expectedIntervals[j] {
+			if !interval.IsEquivalent(&expectedIntervals[j]) {
 				t.Error("Expected: ", interval, ", but ", expectedIntervals[j])
 			}
 		}
