@@ -34,6 +34,115 @@ var intervalMap = map[string]int{
 	"13":  9,
 }
 
+var Intervals = struct {
+	R         Interval
+	Minor2    Interval
+	Major2    Interval
+	Minor3    Interval
+	Major3    Interval
+	Perfect4  Interval
+	Sharp4    Interval
+	Flat5     Interval
+	Perfect5  Interval
+	Sharp5    Interval
+	Minor6    Interval
+	Major6    Interval
+	Sharp6    Interval
+	Minor7    Interval
+	Major7    Interval
+	Flat9     Interval
+	Natural9  Interval
+	Natural11 Interval
+	Sharp11   Interval
+	Flat13    Interval
+	Natural13 Interval
+}{
+	R: Interval{
+		value: intervalMap["R"],
+		name:  "R",
+	},
+	Minor2: Interval{
+		value: intervalMap["m2"],
+		name:  "m2",
+	},
+	Major2: Interval{
+		value: intervalMap["M2"],
+		name:  "M2",
+	},
+	Minor3: Interval{
+		value: intervalMap["m3"],
+		name:  "m3",
+	},
+	Major3: Interval{
+		value: intervalMap["M3"],
+		name:  "M3",
+	},
+	Perfect4: Interval{
+		value: intervalMap["P4"],
+		name:  "P4",
+	},
+	Sharp4: Interval{
+		value: intervalMap["#4"],
+		name:  "#4",
+	},
+	Flat5: Interval{
+		value: intervalMap["b5"],
+		name:  "b5",
+	},
+	Perfect5: Interval{
+		value: intervalMap["P5"],
+		name:  "P5",
+	},
+	Sharp5: Interval{
+		value: intervalMap["#5"],
+		name:  "#5",
+	},
+	Minor6: Interval{
+		value: intervalMap["m6"],
+		name:  "m6",
+	},
+	Major6: Interval{
+		value: intervalMap["M6"],
+		name:  "M6",
+	},
+	Sharp6: Interval{
+		value: intervalMap["#6"],
+		name:  "#6",
+	},
+	Minor7: Interval{
+		value: intervalMap["m7"],
+		name:  "m7",
+	},
+	Major7: Interval{
+		value: intervalMap["M7"],
+		name:  "M7",
+	},
+	Flat9: Interval{
+		value: intervalMap["b9"],
+		name:  "b9",
+	},
+	Natural9: Interval{
+		value: intervalMap["9"],
+		name:  "9",
+	},
+	Natural11: Interval{
+		value: intervalMap["11"],
+		name:  "11",
+	},
+	Sharp11: Interval{
+		value: intervalMap["#11"],
+		name:  "#11",
+	},
+	Flat13: Interval{
+		value: intervalMap["b13"],
+		name:  "b13",
+	},
+	Natural13: Interval{
+		value: intervalMap["13"],
+		name:  "13",
+	},
+}
+
 // NewInterval はIntervalインスタンスを生成
 func NewInterval(interval int) (*Interval, error) {
 	var intervalName string
