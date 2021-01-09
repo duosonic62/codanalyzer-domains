@@ -8,17 +8,7 @@ import (
 )
 
 func main() {
-	codes, err := factory.ReadCodesFromJson("codes.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	triads, err := factory.ReadCodesFromJson("triad.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	codeStructureBases, err := factory.MakeCodeStructureBase(codes)
+	codeStructureBases, err := factory.LoadCodes("codes.json")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -27,7 +17,7 @@ func main() {
 		fmt.Println(code.GetIntervals())
 	}
 
-	triadStructureBases, err := factory.MakeTriadStructureBase(triads)
+	triadStructureBases, err := factory.LoadTriads("triad.json")
 	if err != nil {
 		fmt.Println(err)
 	}
